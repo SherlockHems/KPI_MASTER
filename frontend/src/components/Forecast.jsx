@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Spin, Alert, Card } from 'antd';
+import { API_BASE_URL } from './config';
 
 function Forecast() {
   const [forecastData, setForecastData] = useState(null);
@@ -14,7 +15,7 @@ function Forecast() {
   const fetchForecastData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/forecast');
+      const response = await fetch(`${API_BASE_URL}/forecast`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

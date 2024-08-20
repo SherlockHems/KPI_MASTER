@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Spin, Alert, Typography } from 'antd';
+import { API_BASE_URL } from './config';
 
 const { Text } = Typography;
 
@@ -15,7 +16,7 @@ function Funds({ searchTerm }) {
   const fetchFundsData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/funds');
+      const response = await fetch(`${API_BASE_URL}/funds`);
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { Card, Row, Col, Spin, Alert, Select, Table, Radio } from 'antd';
+import { BarChart, Bar, LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Card, Row, Col, Spin, Alert, Select, Table } from 'antd';
+import { API_BASE_URL } from './config';
 
 const { Option } = Select;
 
@@ -9,7 +10,6 @@ function Sales() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSalesPerson, setSelectedSalesPerson] = useState(null);
-  const [contributionType, setContributionType] = useState('cumulative');
 
   useEffect(() => {
     fetchSalesData();
@@ -18,7 +18,7 @@ function Sales() {
   const fetchSalesData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/sales');
+      const response = await fetch(`${API_BASE_URL}/sales`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Spin, Alert } from 'antd';
+import { API_BASE_URL } from './config';
 
 function Clients({ searchTerm }) {
   const [clientsData, setClientsData] = useState(null);
@@ -13,7 +14,7 @@ function Clients({ searchTerm }) {
   const fetchClientsData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/clients');
+      const response = await fetch(`${API_BASE_URL}/clients`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

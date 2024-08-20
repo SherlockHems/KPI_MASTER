@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card, Row, Col, Statistic, Spin, Alert } from 'antd';
 import { DollarOutlined, TeamOutlined, FundOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { API_BASE_URL } from './config';
 
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
@@ -15,7 +16,7 @@ function Dashboard() {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/dashboard');
+      const response = await fetch(`${API_BASE_URL}/dashboard`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
