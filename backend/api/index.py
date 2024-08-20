@@ -13,8 +13,23 @@ import datetime
 app = Flask(__name__)
 CORS(app)
 
-# Load data and perform calculations here (as in your original app.py)
-# ...
+# Load data
+start_date = datetime.date(2023, 12, 31)
+end_date = datetime.date(2024, 6, 30)
+initial_holdings = load_initial_holdings('../data/2023DEC.csv')
+trades = load_trades('../data/TRADES_LOG.csv')
+product_info = load_product_info('../data/PRODUCT_INFO.csv')
+client_sales = load_client_sales('../data/CLIENT_LIST.csv')
+
+# Calculate data
+daily_holdings = calculate_daily_holdings(initial_holdings, trades, start_date, end_date)
+daily_income, sales_income, client_income = calculate_daily_income(daily_holdings, product_info, client_sales)
+cumulative_sales_income = calculate_cumulative_income(sales_income)
+cumulative_client_income = calculate_cumulative_income(client_income)
+client_stats, fund_stats, sales_stats = show_income_statistics(daily_income, sales_income, client_income, daily_holdings, product_info)
+forecasts = generate_forecasts(daily_income, product_info, daily_holdings, trades, end_date)
+sales_person_breakdowns = generate_sales_person_breakdowns(daily_income, client_sales)
+client_breakdowns = generate_client_breakdowns(daily_income)
 
 @app.route('/api/dashboard', methods=['GET'])
 def get_dashboard():
@@ -44,5 +59,4 @@ def get_forecast():
 # Vercel serverless function handler
 def handler(request):
     with app.test_client() as client:
-        response = client.get(request.path)
-        return response.get_data(), response.status_code, response.headers.to_wsgi_list()
+        return client.get(request.path, query_string=request.args)

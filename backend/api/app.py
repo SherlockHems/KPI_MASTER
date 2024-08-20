@@ -17,10 +17,10 @@ CORS(app)
 # Load data
 start_date = datetime.date(2023, 12, 31)
 end_date = datetime.date(2024, 6, 30)
-initial_holdings = load_initial_holdings('data/2023DEC.csv')
-trades = load_trades('data/TRADES_LOG.csv')
-product_info = load_product_info('data/PRODUCT_INFO.csv')
-client_sales = load_client_sales('data/CLIENT_LIST.csv')
+initial_holdings = load_initial_holdings('../data/2023DEC.csv')
+trades = load_trades('../data/TRADES_LOG.csv')
+product_info = load_product_info('../data/PRODUCT_INFO.csv')
+client_sales = load_client_sales('../data/CLIENT_LIST.csv')
 
 # Calculate data
 daily_holdings = calculate_daily_holdings(initial_holdings, trades, start_date, end_date)
